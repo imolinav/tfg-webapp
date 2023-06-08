@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TravelPlannerComponent } from './travel-planner.component';
 
 const routes: Routes = [
-  { path: '', component: TravelPlannerComponent }
+  { path: '', component: TravelPlannerComponent },
+  { path: ':cityId', component: TravelPlannerComponent }
 ];
 
 @NgModule({
