@@ -1,1 +1,13 @@
-<p>header works!</p>
+<mat-toolbar class="header" color="primary">
+    <div class="header-left">
+      <span>TFG</span>
+    </div>
+    <div class="header-menu">
+      <button mat-button routerLink="home">Inicio</button>
+      <button mat-button routerLink="recommendations">Recomendaciones</button>
+      <button mat-button routerLink="travel-planner">Planificador de viajes</button>
+    </div>
+    <div class="header-right">
+      <button mat-button routerLink="login" class="header-right-access"><mat-icon>perm_identity</mat-icon> Login</button>
+    </div>
+</mat-toolbar>

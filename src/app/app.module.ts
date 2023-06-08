@@ -11,6 +11,11 @@ import { TravelPlannerModule } from './pages/travel-planner/travel-planner.modul
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/header/header.component';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +29,11 @@ import { HeaderComponent } from './shared/header/header.component';
     LoginModule,
     RecommendationsModule,
     TravelPlannerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
