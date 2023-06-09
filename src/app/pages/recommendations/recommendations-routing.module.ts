@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecommendationsComponent } from './recommendations.component';
 
 const routes: Routes = [
-  { path: '', component: RecommendationsComponent }
+  { path: '', component: RecommendationsComponent },
+  { path: ':cityId', component: RecommendationsComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RecommendationsRoutingModule { }
+export class RecommendationsRoutingModule {}
