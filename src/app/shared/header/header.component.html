@@ -8,6 +8,7 @@
       <button mat-button routerLink="travel-planner">Planificador de viajes</button>
     </div>
     <div class="header-right">
-      <button mat-button routerLink="login" class="header-right-access"><mat-icon>perm_identity</mat-icon> Login</button>
+      <button mat-button routerLink="login" class="header-right-access" *ngIf="!user"><mat-icon>perm_identity</mat-icon> Login</button>
+      <span *ngIf="user">{{ user.name }} {{ user.lastname }}</span>
     </div>
 </mat-toolbar>

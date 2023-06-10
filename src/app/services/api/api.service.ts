@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, pluck } from 'rxjs';
-import { Entity, Recommendations } from './models/ApiModels';
+import { Entity, Recommendations, User } from './models/ApiModels';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,14 @@ export class ApiService {
   BASE_URL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
+
+  login(email: string, password: string): Observable<User> {
+    return this.http
+      .get<{ user: User }>(
+        `${this.BASE_URL}/login?email=${email}&password=${password}`
+      )
+      .pipe(pluck('user'));
+  }
 
   getHomeRecommendations(): Observable<Recommendations[]> {
     return this.http
