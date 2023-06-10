@@ -18,3 +18,11 @@ export interface User {
     email: string;
     gender: string;
 }
+
+export interface City {
+  id: number;
+  name: string;
+  avg: number;
+  attractions: Entity[];
+  restaurants: Entity[];
+}

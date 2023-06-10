@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecommendationsComponent } from './recommendations.component';
 
 const routes: Routes = [
-  { path: '', component: RecommendationsComponent },
-  { path: ':cityId', component: RecommendationsComponent },
+  { path: '', component: RecommendationsComponent }
 ];
 
 @NgModule({

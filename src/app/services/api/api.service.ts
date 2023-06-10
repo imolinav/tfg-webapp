@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, pluck } from 'rxjs';
-import { Entity, Recommendations, User } from './models/ApiModels';
+import { City, Entity, Recommendations, User } from './models/ApiModels';
 
 @Injectable({
   providedIn: 'root',
@@ -27,10 +27,18 @@ export class ApiService {
       .pipe(pluck('recommendations'));
   }
 
-  getRecommendations(): Observable<Recommendations[]> {
+  getRecommendations(): Observable<City[]> {
     return this.http
-      .get<{ recommendations: Recommendations[] }>(
+      .get<{ recommendations: City[] }>(
         `${this.BASE_URL}/recommendations`
+      )
+      .pipe(pluck('recommendations'));
+  }
+
+  getRecommendationsByUser(userId: number): Observable<City[]> {
+    return this.http
+      .get<{ recommendations: City[] }>(
+        `${this.BASE_URL}/recommendations/${userId}`
       )
       .pipe(pluck('recommendations'));
   }
