@@ -1,0 +1,86 @@
+.city-link {
+  border: 1px solid lightgrey;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  text-decoration: none;
+  color: black;
+}
+
+.city-link:hover {
+  color: black;
+}
+
+.map-container {
+  overflow: hidden;
+  height: calc(100vh - 210px);
+  &-frame {
+    height: 100%;
+    #map {
+      height: 100%;
+    }
+  }
+}
+
+.interaction {
+  position: absolute;
+  bottom: 25px;
+  right: 10px;
+  z-index: 400;
+  display: grid;
+  &-locate {
+    border-radius: 7px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  &-zoom {
+    border-radius: 7px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    &-in {
+      border-radius: 7px 7px 0 0;
+    }
+    &-out {
+      border-radius: 0 0 7px 7px;
+    }
+    & hr {
+      margin: 0;
+    }
+  }
+  &-button {
+    border: none;
+    &-icon {
+      font-size: 15px;
+      font-weight: bold;
+      height: 15px;
+      width: 15px;
+      margin-top: 5px;
+    }
+  }
+}
+
+.entity {
+  &-label {
+    display: flex;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+
+  &-checkbox {
+    display: none;
+  }
+
+  &-selected {
+    color: green;
+    border: 2px solid green;
+  }
+
+  &-container {
+    height: calc(100vh - 210px);
+    overflow: auto;
+  }
+}

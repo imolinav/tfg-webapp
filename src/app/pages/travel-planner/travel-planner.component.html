@@ -1,1 +1,62 @@
-<p>travel-planner works!</p>
+<div class="container" [ngSwitch]="pageType">
+  <ng-container *ngSwitchCase="'cityList'">
+    <div class="row mt-4">
+      <div class="col-12 mb-3">
+        <h2>¿En que ciudad quieres planificar tu viaje?</h2>
+      </div>
+      <div class="col-3" *ngFor="let city of cities">
+        <a [routerLink]="city.id.toString()" class="city-link"
+          ><span>{{ city.name }}</span
+          ><span>{{ city.avg | number : "1.0-2" }}⭐</span></a
+        >
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'attractionList'">
+    <div class="row mt-4">
+      <div class="col-12 mb-4" *ngIf="formReady">
+        <h2>Planificador de viajes para {{ city.name }}</h2>
+        <button mat-flat-button (click)="calculateRoute()" color="primary" [disabled]="entitiesForm.invalid">Calcular ruta más óptima</button>
+        <button mat-flat-button (click)="cleanSelection()" color="accent" [disabled]="entitiesForm.invalid" class="ms-3">Limpiar selección</button>
+      </div>
+      <div class="col-3 entity-container" [formGroup]="entitiesForm" *ngIf="formReady">
+        <ng-container *ngFor="let entity of city.attractions">
+            <label [for]="entity.id" class="entity-label" [ngClass]="{ 'entity-selected': entitiesForm.controls[entity.id].value }">{{ entity.name }}</label>
+            <input type="checkbox" [formControlName]="entity.id" [id]="entity.id" class="entity-checkbox" (change)="updateSelected($event, entity.id, 'attractions')">
+        </ng-container>
+      </div>
+      <div class="col-9">
+        <div class="map-container">
+          <div class="map-container-frame">
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="interaction">
+      <button
+        class="interaction-button interaction-locate"
+        (click)="localize()"
+      >
+        <mat-icon class="interaction-button-icon">my_location</mat-icon>
+      </button>
+      <div class="interaction-zoom">
+        <button
+          class="interaction-button interaction-zoom-in"
+          (click)="zoomIn()"
+          [disabled]="zoom === 19"
+        >
+          <mat-icon class="interaction-button-icon">add</mat-icon>
+        </button>
+        <hr />
+        <button
+          class="interaction-button interaction-zoom-out"
+          (click)="zoomOut()"
+          [disabled]="zoom === 3"
+        >
+          <mat-icon class="interaction-button-icon">remove</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

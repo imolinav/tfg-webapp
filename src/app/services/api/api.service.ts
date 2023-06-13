@@ -43,15 +43,15 @@ export class ApiService {
       .pipe(pluck('recommendations'));
   }
 
-  getCities(): Observable<Recommendations[]> {
+  getCities(): Observable<City[]> {
     return this.http
-      .get<{ cities: Recommendations[] }>(`${this.BASE_URL}/planner`)
+      .get<{ cities: City[] }>(`${this.BASE_URL}/planner`)
       .pipe(pluck('cities'));
   }
 
-  getEntities(cityId: number): Observable<Entity[]> {
+  getEntities(cityId: number): Observable<City> {
     return this.http
-      .get<{ city: Entity[] }>(`${this.BASE_URL}/planner/${cityId}`)
+      .get<{ city: City }>(`${this.BASE_URL}/planner/${cityId}`)
       .pipe(pluck('city'));
   }
 }

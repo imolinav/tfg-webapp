@@ -22,7 +22,12 @@ export interface User {
 export interface City {
   id: number;
   name: string;
-  avg: number;
-  attractions: Entity[];
-  restaurants: Entity[];
+  avg?: number;
+  attractions?: Entity[];
+  restaurants?: Entity[];
+  latitude?: string;
+  longitude?: string;
+  population?: number;
+  altitude?: number;
+  govern_party?: string;
 }

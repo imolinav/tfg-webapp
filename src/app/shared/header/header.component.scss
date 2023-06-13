@@ -4,7 +4,6 @@
   font-size: 14px;
   font-weight: 500;
   &-right {
-    width: 315px;
     text-align: right;
     &-access {
       margin-right: 20px;
@@ -12,5 +11,8 @@
         font-size: 20px;
       }
     }
+  }
+  &-left {
+    width: 115px;
   }
 }
