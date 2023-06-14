@@ -9,7 +9,6 @@ import {
   SearchResult,
 } from 'src/app/services/nominatim/nominatim.service';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
-import { MarkerService } from 'src/app/services/leaflet/marker/marker.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -95,7 +94,6 @@ export class TravelPlannerComponent implements OnInit {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private nominatimService: NominatimService,
-    private markerService: MarkerService,
     private fb: FormBuilder
   ) {}
 
@@ -105,7 +103,6 @@ export class TravelPlannerComponent implements OnInit {
       this.pageType = 'attractionList';
       this.apiService.getEntities(Number(this.cityId)).subscribe((city) => {
         this.city = city;
-        console.log(this.city);
         city.attractions.forEach((entity) => {
           this.entitiesForm.addControl(
             entity.id.toString(),
