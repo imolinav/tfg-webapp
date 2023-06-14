@@ -131,17 +131,12 @@
                       </div>
                     </li>
                     <li>
-                      <h4>{{ recommendation.name }}</h4>
-                    </li>
-                    <li>
-                      <div class="time">
-                        <span>{{ recommendation.avg | number : "1.0-2" }}</span>
-                      </div>
+                      <h4><span>{{ recommendation.name }}</span><span class="ms-3">{{ recommendation.avg | number : "1.0-2" }}⭐</span></h4>
                     </li>
                     <li>
                       <div class="white-button">
                         <a [routerLink]="['/city', recommendation.id]"
-                          >I am interested</a
+                          >Ver ciudad</a
                         >
                       </div>
                     </li>

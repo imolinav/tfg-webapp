@@ -387,8 +387,11 @@ p {
 
 .event-list .event-item {
 	margin: 0;
-	padding: 0;
-	list-style: none;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+	align-items: baseline;
 }
 
 .event-list .event-item li {
@@ -412,13 +415,14 @@ p {
 }
 
 .event-list ul li .date span {
-	padding-top: 15px;
-	margin-top: 0px;
-	font-size: 18px;
-	display: block;
-	font-weight: 700;
-	color: #fff;
-	text-transform: uppercase;
+	padding-top: 20px;
+    margin-top: 0px;
+    font-size: 40px;
+    line-height: 40px;
+    display: block;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 .event-list h4 {
@@ -432,28 +436,6 @@ p {
 	display: inline-block;
 }
 
-.event-list .web span {
-	font-size: 13px;
-	font-weight: 600;
-	color: #b94e5e;
-	display: inline-block;
-}
-
-.event-list .design span {
-	font-size: 13px;
-	font-weight: 600;
-	color: #e86859;
-	display: inline-block;
-}
-
-.event-list .app span {
-	font-size: 13px;
-	font-weight: 600;
-	color: #f4bc51;
-	display: inline-block;
-}
-
-
 .event-list .white-button a:hover {
 	background-color: #f4bc51;
 	color: #fff;
@@ -463,10 +445,6 @@ p {
 	transition: all 0.5s;
 	height: 545px;
 }
-
-
-
-
 
 .testimonial {
 	margin-top: 10px;	

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CityRoutingModule } from './city-routing.module';
 import { CityComponent } from './city.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { CityComponent } from './city.component';
   ],
   imports: [
     CommonModule,
-    CityRoutingModule
+    CityRoutingModule,
+    MatButtonModule
   ]
 })
 export class CityModule { }

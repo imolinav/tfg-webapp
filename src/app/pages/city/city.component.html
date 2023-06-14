@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row mt-4" *ngIf="city">
-    <div class="col-12 mb-3">
+    <div class="col-12 mb-3 d-flex justify-content-between">
       <h2>Lugares que visitar en {{ city.name }}</h2>
+      <button mat-flat-button color="primary" (click)="navigateToPlanner(city.id)" class="mb-3">Planifica tu viaje</button>
     </div>
     <div class="col-6">
       <h3>Atracciones turísticas</h3>

@@ -1,24 +1,34 @@
 <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-12">
             <h2 *ngIf="!user">Recomendaciones de lugares que visitar</h2>
             <h2 *ngIf="user">Recomendaciones para el usuario {{ user.name }} {{ user.lastname }}</h2>
             <p>La página de recomendaciones devuelve un listado de las 5 ciudades más recomendables para visitar basándose únicamente en la media de las puntuaciones de las atracciones turísticas y restaurantes.</p>
             <p>Si quieres tener un listado de recomendaciones que se ajuste más a tus gustos, <a routerLink="/login">inicia sesión</a> y compártenos que lugares te gustan para que, por medio de Inteligencia Artificial, podamos proponerte recomendaciones personalizadas.</p>
         </div>
-        <div class="col-12" *ngFor="let city of recommendations">
+        <div class="col-12 recommendation-container" *ngFor="let city of recommendations">
             <div class="row">
-                <div class="col-4">
-                    <h3>{{ city.name }}</h3>
-                    <h5>{{ city.avg | number: '1.0-2' }}⭐</h5>
+                <div class="col-2">
+                    <h1><a [routerLink]="['/city', city.id]">{{ city.name }}</a></h1>
+                    <h2>{{ city.avg | number: '1.0-2' }}⭐</h2>
                 </div>
-                <div class="col-4">
-                    <p class="entities-title">Lugares que visitar</p>
-                    <p *ngFor="let attraction of city.attractions">{{ attraction.name }} - {{ attraction.score | number: '1.0-2' }}⭐</p>
+                <div class="col-5">
+                    <h3 class="entities-title">Lugares que visitar</h3>
+                    <ng-container *ngIf="city.attractions.length > 0">
+                        <p *ngFor="let attraction of city.attractions">{{ attraction.name }} - {{ attraction.score | number: '1.0-2' }}⭐</p>
+                    </ng-container>
+                    <ng-container *ngIf="city.attractions.length === 0">
+                        <p>No se han encontrado restaurantes para esta ciudad.</p>
+                    </ng-container>
                 </div>
-                <div class="col-4">
-                    <p class="entities-title">Lugares donde comer</p>
-                    <p *ngFor="let restaurant of city.restaurants">{{ restaurant.name }} - {{ restaurant.score | number: '1.0-2' }}⭐</p>
+                <div class="col-5">
+                    <h3 class="entities-title">Lugares donde comer</h3>
+                    <ng-container *ngIf="city.restaurants.length > 0">
+                        <p *ngFor="let restaurant of city.restaurants">{{ restaurant.name }} - {{ restaurant.score | number: '1.0-2' }}⭐</p>
+                    </ng-container>
+                    <ng-container *ngIf="city.restaurants.length === 0">
+                        <p>No se han encontrado restaurantes para esta ciudad.</p>
+                    </ng-container>
                 </div>
             </div>
         </div>
