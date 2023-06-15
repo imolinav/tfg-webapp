@@ -29,9 +29,7 @@ export class ApiService {
 
   getRecommendations(): Observable<City[]> {
     return this.http
-      .get<{ recommendations: City[] }>(
-        `${this.BASE_URL}/recommendations`
-      )
+      .get<{ recommendations: City[] }>(`${this.BASE_URL}/recommendations`)
       .pipe(pluck('recommendations'));
   }
 
@@ -53,5 +51,18 @@ export class ApiService {
     return this.http
       .get<{ city: City }>(`${this.BASE_URL}/planner/${cityId}`)
       .pipe(pluck('city'));
+  }
+
+  addEntityScore(
+    attractionId: number,
+    userId: number,
+    score: number
+  ): Observable<any> {
+    return this.http
+      .post<{ data: any }>(`${this.BASE_URL}/score/${attractionId}`, {
+        userId,
+        score,
+      })
+      .pipe(pluck('data'));
   }
 }

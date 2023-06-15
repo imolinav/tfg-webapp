@@ -5,4 +5,27 @@
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
+    &-container {
+        cursor: pointer;
+        position: relative;
+        &:hover &-voting-button {
+            display: block;
+        }
+    }
+    &-voting {
+        position: absolute;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        &-button {
+            display: none;
+            cursor: pointer;
+        }
+        &-left {
+            left: -25px;
+        }
+        &-right {
+            right: -25px;
+        }
+    }
 }

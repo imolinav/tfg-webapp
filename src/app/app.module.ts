@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AttractionModule } from './pages/attraction/attraction.module';
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
 import { RecommendationsModule } from './pages/recommendations/recommendations.module';
@@ -27,7 +26,6 @@ import { CityModule } from './pages/city/city.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AttractionModule,
     CityModule,
     HomeModule,
     LoginModule,
