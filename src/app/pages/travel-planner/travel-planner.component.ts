@@ -9,6 +9,8 @@ import {
   SearchResult,
 } from 'src/app/services/nominatim/nominatim.service';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
+import 'leaflet-routing-machine';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -40,6 +42,7 @@ export class TravelPlannerComponent implements OnInit {
   lon = -0.37673;
   zoom = 14;
   markers: { entityId: number; marker: any }[] = [];
+  distancesMatrix = [];
 
   resultShape: Leaflet.Polygon;
   searchResult: SearchResult[];
@@ -134,8 +137,6 @@ export class TravelPlannerComponent implements OnInit {
         ? this.city.restaurants.find((r) => r.id === entityId)
         : this.city.attractions.find((a) => a.id === entityId);
 
-    console.log(entity)
-      
     if (!event.target.checked) {
       const markerIndex = this.markers
         .map((marker) => marker.entityId)
@@ -166,16 +167,10 @@ export class TravelPlannerComponent implements OnInit {
 
   cleanSelection() {
     this.markers.forEach((marker) => {
-      this.map.removeLayer(marker.marker)
+      this.map.removeLayer(marker.marker);
     });
     this.markers = [];
     this.entitiesForm.reset(false, { emitEvent: false });
-  }
-
-  search(searchText: string) {}
-
-  calculateRoute() {
-    console.log(this.entitiesForm.value);
   }
 
   zoomIn() {
@@ -188,6 +183,130 @@ export class TravelPlannerComponent implements OnInit {
 
   localize() {
     this.map.locate({ setView: true });
+  }
+
+  calculateRoute() {
+    this.markers.forEach((marker, i) => {
+      let subDistancesArray = [];
+      this.markers.forEach((subMarker, j) => {
+        if (i === j) {
+          subDistancesArray.push({
+            from: marker.entityId,
+            to: subMarker.entityId,
+            distance: 0,
+          });
+        } else {
+          subDistancesArray.push({
+            from: marker.entityId,
+            to: subMarker.entityId,
+            distance: this.map.distance(
+              marker.marker._latlng,
+              subMarker.marker._latlng
+            ),
+          });
+        }
+      });
+      this.distancesMatrix.push(subDistancesArray);
+    });
+    this.calculateTSP();
+  }
+
+  private calculateTSP() {
+    const answer = this.sanTsp();
+  }
+
+  private sanTsp() {
+    const tspOptions = {
+      N: 10000,
+      T: 70,
+      lambda: 0.95,
+      round: 100,
+    };
+
+    let T = tspOptions.T;
+    const path = this.randomPath();
+    let current = {
+      path: path,
+      cost: this.pathCost(path),
+    };
+
+    let answer = {
+      initial: current,
+      final: null,
+    };
+
+    console.log('Starting SAN-TPS');
+
+    for (let i = 1; i < tspOptions.N; i++) {
+      current = this.calculateCurrent(current);
+      if (i % tspOptions.round) {
+        T = this.anneal(T, tspOptions.lambda);
+      }
+      console.log(`Iteration ${i}`, current);
+    }
+    console.log('Finished SAN-TPS', current);
+    answer.final = current;
+    return answer;
+  }
+
+  private randomPath() {
+    const markersIds = this.markers.map((marker) => marker.entityId);
+    for (let i = markersIds.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = markersIds[i];
+      markersIds[i] = markersIds[j];
+      markersIds[j] = temp;
+    }
+    markersIds.push(markersIds[0]);
+    return markersIds;
+  }
+
+  private pathCost(path: number[]) {
+    let totalCost = 0;
+    for (let i = 0; i < path.length; i++) {
+      this.distancesMatrix.forEach((row) => {
+        row.forEach((column: { from: number, to: number, distance: number }) => {
+          if (column.from === path[i] && column.to === path[i + 1]) {
+            totalCost += column.distance;
+          }
+        });
+      });
+    }
+    return totalCost;
+  }
+
+  private calculateCurrent(current: { path: number[], cost: number }) {
+    let newPath: number[];
+    do {
+      newPath = this.randomPath();
+    } while (this.areEqual(current.path, newPath));
+    return current.cost > this.pathCost(newPath)
+      ? {
+          path: newPath,
+          cost: this.pathCost(newPath),
+        }
+      : current;
+  }
+
+  private anneal(T: number, lambda: number): number {
+    return T * lambda;
+  }
+
+  private areEqual(current: number[], newPath: number[]): boolean {
+    if (
+      current.length !== newPath.length ||
+      current == null ||
+      newPath == null
+    ) {
+      return false;
+    }
+    let equal = true;
+    for (let i = 0; i < current.length; i++) {
+      if (current[i] !== newPath[i]) {
+        equal = false;
+      }
+    }
+    return equal;
   }
 
   private requireCheckboxesToBeCheckedValidator(minRequired = 2): ValidatorFn {
